@@ -1,6 +1,8 @@
 package mypkg;
 
 import java.io.*;
+import java.util.Enumeration;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -16,6 +18,7 @@ public class HelloServlet extends HttpServlet {
 		// socket
 
 		PrintWriter out = response.getWriter();
+		
 
 		// Write the response message, in an HTML page
 
@@ -28,6 +31,17 @@ public class HelloServlet extends HttpServlet {
 			out.println("<title>Hello, World</title></head>");
 			out.println("<body>");
 			out.println("<h1>HelloServlet!</h1>"); // Says HelloServlet
+
+			out.println("<h2>Headers<h2/>");
+			Enumeration<String> headerNames = request.getHeaderNames();
+			while (headerNames.hasMoreElements()) {
+				String headerName = headerNames.nextElement();
+				out.print("Header Name: <em>" + headerName);
+				String headerValue = request.getHeader(headerName);
+				out.print("</em>, Header Value: <em>" + headerValue);
+				out.println("</em><br/>");
+			}
+			
 			// Echo client's request information
 			out.println("<p>Request URI: " + request.getRequestURI() + "</p>");
 			out.println("<p>Protocol: " + request.getProtocol() + "</p>");
