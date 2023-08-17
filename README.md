@@ -9,7 +9,7 @@ oc new-project helloservlet --display-name="HelloServlet Demo"
 ## 2. Deploy binary artifact
 
 ```sh
-oc new-app --name=myapp jboss-webserver56-openjdk11-tomcat9-openshift-ubi8:latest~https://github.com/ecwpz91/HelloServlet.git
+oc new-app --name=myapp jws57-openjdk11-openshift-rhel8:latest~https://github.com/ecwpz91/HelloServlet.git
 ```
 
 ## 3. Expose service
@@ -22,6 +22,9 @@ oc expose svc/myapp
 
 ```sh
 oc set env dc/myapp -e ENVAR=W00t!
+oc set env dc/myapp -e URI=https://api.finto.fi
+oc set env dc/myapp -e URI_PARAMS='/rest/v1/search?vocab=ysa&query=kiss*&lang=fi'
+oc set env dc/myapp -e USER_KEY=myuserkey
 ```
 
 ## 5. Create a base64 password
