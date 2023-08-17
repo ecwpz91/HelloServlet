@@ -94,10 +94,15 @@ public class HelloServlet extends HttpServlet {
 			}
 
 			// Call the api and print the results
-			if (URI != null && !URI.isEmpty() && URI_PARAMS != null && !URI_PARAMS.isEmpty() && USER_KEY != null
-					&& !USER_KEY.isEmpty()) {
-				URL baseUri = new URL(URI);
-				URL relativeUri = new URL(baseUri, URI_PARAMS + "&user_key=" + USER_KEY);
+			if (URI != null && !URI.isEmpty() && URI_PARAMS != null && !URI_PARAMS.isEmpty() ) {
+				URL baseUri = new URL(URI);				
+				URL relativeUri = null;
+
+				if (USER_KEY != null && !USER_KEY.isEmpty()) {
+					relativeUri = new URL(baseUri, URI_PARAMS + "&user_key=" + USER_KEY);
+				} else {
+					relativeUri = new URL(baseUri, URI_PARAMS);
+				}
 
 				out.println("<p>API url: " + relativeUri + "</p>");
 
