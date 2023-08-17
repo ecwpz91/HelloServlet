@@ -1,4 +1,5 @@
 package mypkg;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -78,33 +79,33 @@ public class HelloServlet extends HttpServlet {
 				out.println("<p>Environment variable: " + ENVAR + "</p>");
 			}
 
-			// Check for uri base variable and display if set
-			if (URI != null && !URI.isEmpty()) {
-				out.println("<p>Base url: " + URI + "</p>");
-			}
-
-			// Check for uri query params and display if set
-			if (URI_PARAMS != null && !URI_PARAMS.isEmpty()) {
-				out.println("<p>Url params: " + URI_PARAMS + "</p>");
-			}
-
-			// Check for uri user key and display if set
-			if (USER_KEY != null && !USER_KEY.isEmpty()) {
-				out.println("<p>User key: " + USER_KEY + "</p>");
-			}
-
 			// Call the api and print the results
-			if (URI != null && !URI.isEmpty() && URI_PARAMS != null && !URI_PARAMS.isEmpty() ) {
-				URL baseUri = new URL(URI);				
+			if (URI != null && !URI.isEmpty()) {
+				URL baseUri = new URL(URI);
 				URL relativeUri = null;
 
 				if (USER_KEY != null && !USER_KEY.isEmpty()) {
-					relativeUri = new URL(baseUri, URI_PARAMS + "&user_key=" + USER_KEY);
+					if (URI_PARAMS != null && !URI_PARAMS.isEmpty()) {
+						out.println("<p>User key: " + USER_KEY + "</p>");
+						out.println("<p>Url params: " + URI_PARAMS + "</p>");
+
+						relativeUri = new URL(baseUri, URI_PARAMS + "&user_key=" + USER_KEY);
+					} else {
+						out.println("<p>User key: " + USER_KEY + "</p>");
+
+						relativeUri = new URL(baseUri, "?user_key=" + USER_KEY);
+					}
 				} else {
-					relativeUri = new URL(baseUri, URI_PARAMS);
+					if (URI_PARAMS != null && !URI_PARAMS.isEmpty()) {
+						out.println("<p>Url params: " + URI_PARAMS + "</p>");
+
+						relativeUri = new URL(baseUri, URI_PARAMS);
+					} else {
+						relativeUri = baseUri;
+					}
 				}
 
-				out.println("<p>API url: " + relativeUri + "</p>");
+				out.println("<p>API call: " + relativeUri + "</p>");
 
 				InputStream in = null;
 
