@@ -1,10 +1,18 @@
 package mypkg;
-
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
 import java.util.Enumeration;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class HelloServlet extends HttpServlet {
 	@Override
@@ -18,13 +26,13 @@ public class HelloServlet extends HttpServlet {
 		// socket
 
 		PrintWriter out = response.getWriter();
-		
 
 		// Write the response message, in an HTML page
 
 		try {
 			String ENVAR = System.getenv("ENVAR");
 			String URI = System.getenv("URI");
+			String URI_PARAMS = System.getenv("URI_PARAMS");
 			String USER_KEY = System.getenv("USER_KEY");
 
 			out.println("<!DOCTYPE html>");
@@ -43,7 +51,7 @@ public class HelloServlet extends HttpServlet {
 				out.print("</em>, Header Value: <em>" + headerValue);
 				out.println("</em><br/>");
 			}
-			
+
 			// Echo client's request information
 			out.println("<p>Request URI: " + request.getRequestURI() + "</p>");
 			out.println("<p>Protocol: " + request.getProtocol() + "</p>");
@@ -51,7 +59,7 @@ public class HelloServlet extends HttpServlet {
 			out.println("<p>Remote Address: " + request.getRemoteAddr() + "</p>");
 			// Generate a random number upon each request
 			out.println("<p>A Random Number: <strong>" + Math.random() + "</strong></p>");
-			
+
 			// Check for environment variable and display if set
 			if (ENVAR != null && !ENVAR.isEmpty()) {
 				out.println("<p>Environment variable: " + ENVAR + "</p>");
@@ -65,6 +73,48 @@ public class HelloServlet extends HttpServlet {
 				out.println("<p>API url: " + URI + "</p>");
 			}
 
+			// Check for environment variable and display if set
+			if (ENVAR != null && !ENVAR.isEmpty()) {
+				out.println("<p>Environment variable: " + ENVAR + "</p>");
+			}
+
+			// Check for uri base variable and display if set
+			if (URI != null && !URI.isEmpty()) {
+				out.println("<p>Base url: " + URI + "</p>");
+			}
+
+			// Check for uri query params and display if set
+			if (URI_PARAMS != null && !URI_PARAMS.isEmpty()) {
+				out.println("<p>Url params: " + URI_PARAMS + "</p>");
+			}
+
+			// Check for uri user key and display if set
+			if (USER_KEY != null && !USER_KEY.isEmpty()) {
+				out.println("<p>User key: " + USER_KEY + "</p>");
+			}
+
+			// Call the api and print the results
+			if (URI != null && !URI.isEmpty() && URI_PARAMS != null && !URI_PARAMS.isEmpty() && USER_KEY != null
+					&& !USER_KEY.isEmpty()) {
+				URL baseUri = new URL(URI);
+				URL relativeUri = new URL(baseUri, URI_PARAMS + "&user_key=" + USER_KEY);
+
+				out.println("<p>API url: " + relativeUri + "</p>");
+
+				InputStream in = null;
+
+				try {
+					in = relativeUri.openStream();
+					InputStreamReader inR = new InputStreamReader(in);
+					BufferedReader buf = new BufferedReader(inR);
+					String line;
+					while ((line = buf.readLine()) != null) {
+						out.println(line);
+					}
+				} finally {
+					in.close();
+				}
+			}
 
 			out.println("</body>");
 			out.println("</html>");
