@@ -9,6 +9,7 @@ oc new-project helloservlet --display-name="HelloServlet Demo"
 ## 2. Deploy binary artifact
 
 ```sh
+oc import-image jboss-webserver-5/jws57-openjdk11-openshift-rhel8:latest --from=registry.redhat.io/jboss-webserver-5/jws57-openjdk11-openshift-rhel8:5.7.3-2.1687186259 --confirm
 oc new-app --name=myapp jws57-openjdk11-openshift-rhel8:latest~https://github.com/ecwpz91/HelloServlet.git
 ```
 
@@ -21,10 +22,10 @@ oc expose svc/myapp
 ## 4. Set environment variable dynamically
 
 ```sh
-oc set env dc/myapp -e ENVAR=W00t!
-oc set env dc/myapp -e URI=https://api.finto.fi
-oc set env dc/myapp -e URI_PARAMS='/rest/v1/search?vocab=ysa&query=kiss*&lang=fi'
-oc set env dc/myapp -e USER_KEY=myuserkey
+oc set env deploy/myapp -e ENVAR=W00t!
+oc set env deploy/myapp -e URI=https://api.finto.fi
+oc set env deploy/myapp -e URI_PARAMS='/rest/v1/search?vocab=ysa&query=kiss*&lang=fi'
+oc set env deploy/myapp -e USER_KEY=myuserkey
 ```
 
 ## 5. Create a base64 password
