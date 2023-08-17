@@ -23,9 +23,9 @@ public class HelloServlet extends HttpServlet {
 		// Write the response message, in an HTML page
 
 		try {
-			String value = System.getenv("ENVAR");
-			String api_url = System.getenv("API_URL");
-			String user_key = System.getenv("USER_KEY");
+			String ENVAR = System.getenv("ENVAR");
+			String URI = System.getenv("URI");
+			String USER_KEY = System.getenv("USER_KEY");
 
 			out.println("<!DOCTYPE html>");
 			out.println("<html><head>");
@@ -53,16 +53,16 @@ public class HelloServlet extends HttpServlet {
 			out.println("<p>A Random Number: <strong>" + Math.random() + "</strong></p>");
 			
 			// Check for environment variable and display if set
-			if (value != null && !value.isEmpty()) {
-				out.println("<p>Environment variable: " + value + "</p>");
+			if (ENVAR != null && !ENVAR.isEmpty()) {
+				out.println("<p>Environment variable: " + ENVAR + "</p>");
 			}
 
-			if (user_key != null && !user_key.isEmpty()) {
-				out.println("<p>User key: " + user_key + "</p>");
+			if (USER_KEY != null && !USER_KEY.isEmpty()) {
+				out.println("<p>User key: " + USER_KEY + "</p>");
 			}
 
-			if (api_url != null && !api_url.isEmpty()) {
-				out.println("<p>API url: " + api_url + "</p>");
+			if (URI != null && !URI.isEmpty()) {
+				out.println("<p>API url: " + URI + "</p>");
 			}
 
 
