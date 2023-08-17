@@ -66,19 +66,6 @@ public class HelloServlet extends HttpServlet {
 				out.println("<p>Environment variable: " + ENVAR + "</p>");
 			}
 
-			if (USER_KEY != null && !USER_KEY.isEmpty()) {
-				out.println("<p>User key: " + USER_KEY + "</p>");
-			}
-
-			if (URI != null && !URI.isEmpty()) {
-				out.println("<p>API url: " + URI + "</p>");
-			}
-
-			// Check for environment variable and display if set
-			if (ENVAR != null && !ENVAR.isEmpty()) {
-				out.println("<p>Environment variable: " + ENVAR + "</p>");
-			}
-
 			// Call the api and print the results
 			if (URI != null && !URI.isEmpty()) {
 				URL baseUri = new URL(URI);
