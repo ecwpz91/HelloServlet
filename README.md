@@ -9,7 +9,7 @@ oc new-project helloservlet --display-name="HelloServlet Demo"
 ## 2. Deploy binary artifact
 
 ```sh
-oc new-app --name=myapp jboss-webserver30-tomcat8-openshift:1.2~https://github.com/ecwpz91/HelloServlet.git
+oc new-app --name=myapp jboss-webserver56-openjdk11-tomcat9-openshift-ubi8:latest~https://github.com/ecwpz91/HelloServlet.git
 ```
 
 ## 3. Expose service
