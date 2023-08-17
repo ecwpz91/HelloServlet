@@ -24,6 +24,8 @@ public class HelloServlet extends HttpServlet {
 
 		try {
 			String value = System.getenv("ENVAR");
+			String api_url = System.getenv("API_URL");
+			String user_key = System.getenv("USER_KEY");
 
 			out.println("<!DOCTYPE html>");
 			out.println("<html><head>");
@@ -54,6 +56,15 @@ public class HelloServlet extends HttpServlet {
 			if (value != null && !value.isEmpty()) {
 				out.println("<p>Environment variable: " + value + "</p>");
 			}
+
+			if (user_key != null && !user_key.isEmpty()) {
+				out.println("<p>User key: " + user_key + "</p>");
+			}
+
+			if (api_url != null && !api_url.isEmpty()) {
+				out.println("<p>API url: " + api_url + "</p>");
+			}
+
 
 			out.println("</body>");
 			out.println("</html>");
